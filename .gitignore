@@ -1,7 +1,7 @@
 .venv/
-
-*.pyc
+trash/
 __pycache__/
+*.pyc
 
 instance/
 
