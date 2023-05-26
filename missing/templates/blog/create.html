@@ -6,10 +6,20 @@
 
 {% block content %}
   <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+    <label for="title">Missed Person Name</label>
+    <input name="title" id="title" value="{{ request.form['missed_name'] }}" required>
+    <label for="title">Since When</label>
+    <input name="title" id="title" value="{{ request.form['since'] }}" required>
+    <label for="title">From where</label>
+    <input name="title" id="title" value="{{ request.form['missing_from'] }}" required>
+    <label for="title">Gender</label>
+    <input name="title" id="title" value="{{ request.form['gender'] }}" required>
+    <label for="title">Age</label>
+    <input name="title" id="title" value="{{ request.form['age'] }}" required>
+    <label for="title">Call On Phone</label>
+    <input name="title" id="title" value="{{ request.form['call_on'] }}" required>
+    <label for="body">Addtional Info</label>
+    <textarea name="body" id="body">{{ request.form['addtional_info'] }}</textarea>
     <input type="submit" value="Save">
   </form>
 {% endblock %}
