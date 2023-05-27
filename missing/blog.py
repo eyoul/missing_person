@@ -12,7 +12,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, missed_name, since, missing_from, gender created, age, call_on, addtional_info, finder_id, email'
+        'SELECT p.id, missed_name, since, missing_from, gender, age, call_on, addtional_info, created, finder_id,email'
         ' FROM post p JOIN user u ON p.finder_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
