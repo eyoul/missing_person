@@ -6,47 +6,37 @@
 
 {% block content %}
   <form method="post" enctype="multipart/form-data">
-    <div class="form-group">
       <label for="missed_name">Missed Person Name</label>
       <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
-    </div>
-    <div class="form-group">
+
       <label for="since">Since When</label>
       <input name="since" id="since" value="{{ request.form['since'] }}" required class="form-control">
-    </div>
-    <div class="form-group">
+
       <label for="missing_from">From where</label>
       <input name="missing_from" id="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control">
-    </div>
-    <div class="form-group">
+
       <label>Gender</label>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="male" value="male" {% if request.form['gender'] == 'male' %}checked{% endif %} required>
+        <input class="form-check-input" type="radio" name="gender" id="male" value="male" {% if request.form['gender'] == 'Male' %}checked{% endif %} required>
         <label class="form-check-label" for="male">Male</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="female" value="female" {% if request.form['gender'] == 'female' %}checked{% endif %} required>
+        <input class="form-check-input" type="radio" name="gender" id="female" value="female" {% if request.form['gender'] == 'Female' %}checked{% endif %} required>
         <label class="form-check-label" for="female">Female</label>
       </div>
 
-      <div class="form-group">
-        <label for="age">Age</label>
-        <input name="age" id="age" value="{{ request.form['age'] }}" required class="form-control">
-      </div>
-    
-      <div class="form-group">
-        <label for="call_on">Call On</label>
-        <input name="call_on" id="call_on" value="{{ request.form['call_on'] }}" required class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="addtional_info">Addtional Info</label>
-        <textarea name="addtional_info" id="addtional_info" value="{{ request.form['addtional_info'] }}" required class="form-control"></textarea>
-      </div>
+      <label for="age">Age</label>
+      <input name="age" id="age" value="{{ request.form['age'] }}" required class="form-control">
 
-      <div class="form-group">
-        <label for="file">Upload Image</label>
-        <input name="photo_url" id="file" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
-      </div>
+      <label for="call_on">Call On</label>
+      <input name="call_on" id="call_on" value="{{ request.form['call_on'] }}" required class="form-control">
+
+      <label for="addtional_info">Addtional Info</label>
+      <textarea name="addtional_info" id="addtional_info" value="{{ request.form['addtional_info'] }}" required class="form-control"></textarea>
+
+      <label for="file">Upload Image</label>
+      <input name="photo_url" id="photo_url" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
+
     <input type="submit" value="Save">
   </form>
 {% endblock %}
