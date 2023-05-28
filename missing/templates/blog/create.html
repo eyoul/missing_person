@@ -45,7 +45,8 @@
 
       <div class="form-group">
         <label for="file">Upload Image</label>
-        <input name="photo_url" id="file" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
+        <input name="photo_url" id="photo_url" value="{{ request.form['photo_url'] }}" required class="form-control">
+        <input name="file" id="file" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
       </div>
     <input type="submit" value="Save">
   </form>
