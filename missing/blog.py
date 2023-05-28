@@ -33,6 +33,8 @@ def allowed_file(filename):
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    print(UPLOAD_FOLDER)
+
     if request.method == 'POST':
         missed_name = request.form['missed_name']
         since = request.form['since']
