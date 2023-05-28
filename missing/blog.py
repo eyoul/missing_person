@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from missing.auth import login_required
 from missing.db import get_db
 
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static', 'uploads')
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'missing', 'static', 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 if not os.path.exists(UPLOAD_FOLDER):
