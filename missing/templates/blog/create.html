@@ -5,21 +5,48 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Missed Person Name</label>
-    <input name="title" id="title" value="{{ request.form['missed_name'] }}" required>
-    <label for="title">Since When</label>
-    <input name="title" id="title" value="{{ request.form['since'] }}" required>
-    <label for="title">From where</label>
-    <input name="title" id="title" value="{{ request.form['missing_from'] }}" required>
-    <label for="title">Gender</label>
-    <input name="title" id="title" value="{{ request.form['gender'] }}" required>
-    <label for="title">Age</label>
-    <input name="title" id="title" value="{{ request.form['age'] }}" required>
-    <label for="title">Call On Phone</label>
-    <input name="title" id="title" value="{{ request.form['call_on'] }}" required>
-    <label for="body">Addtional Info</label>
-    <textarea name="body" id="body">{{ request.form['addtional_info'] }}</textarea>
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="missed_name">Missed Person Name</label>
+      <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="since">Since When</label>
+      <input name="since" id="since" value="{{ request.form['since'] }}" required class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="missing_from">From where</label>
+      <input name="missing_from" id="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="male" value="male" {% if request.form['gender'] == 'male' %}checked{% endif %} required>
+        <label class="form-check-label" for="male">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="female" value="female" {% if request.form['gender'] == 'female' %}checked{% endif %} required>
+        <label class="form-check-label" for="female">Female</label>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input name="age" id="age" value="{{ request.form['age'] }}" required class="form-control">
+      </div>
+    
+      <div class="form-group">
+        <label for="call_on">Call On</label>
+        <input name="call_on" id="call_on" value="{{ request.form['call_on'] }}" required class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="addtional_info">Addtional Info</label>
+        <textarea name="addtional_info" id="addtional_info" value="{{ request.form['addtional_info'] }}" required class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="file">Upload Image</label>
+        <input name="file" id="file" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
+      </div>
     <input type="submit" value="Save">
   </form>
 {% endblock %}

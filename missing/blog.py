@@ -8,6 +8,9 @@ import os
 from missing.auth import login_required
 from missing.db import get_db
 
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
 bp = Blueprint('blog', __name__)
 
 @bp.route('/')
@@ -20,7 +23,7 @@ def index():
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -57,23 +60,23 @@ def create():
 
         # handle photo_url upload
         if 'photo_url' not in request.files:
-            error = 'photo_url is required.'
+            error = 'photo is required.'
         else:
             file = request.files['photo_url']
             if file.filename == '':
-                error = 'photo_url is required.'
+                error = 'photo is required.'
             elif not allowed_file(file.filename):
                 error = 'Invalid file type. Only PNG, JPG, JPEG, and GIF are allowed.'
             else:
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+                file.save(os.path.join(UPLOAD_FOLDER, filename))
+                
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (missed_name, since, missing_from, gender, age, call_on, addtional_info, photo_url finder_id)'
+                'INSERT INTO post (missed_name, since, missing_from, gender, age, call_on, addtional_info, photo_url, finder_id)'
                 ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 (missed_name, since, missing_from, gender, age, call_on, addtional_info, filename, g.user['id'])
             )
