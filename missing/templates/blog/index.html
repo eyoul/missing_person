@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Posts{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('blog.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% for post in posts %}
+  <div class="row-container">  
+      <article class="post">
+        <header></header>
+          <p class="about">by {{ post['email'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</p>
+            {% if g.user['id'] == post['finder_id'] %}
+              <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+            {% endif %}
+              <p class="miss">MISSING</p>
+          {% if post['photo_url'] %}
+            <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" alt="{{ post['missed_name'] }} photo">
+          {% endif %}
+          <h2>{{ post['missed_name'] }}</h2>
+          <ul>
+            <li><strong>Gender:- </strong>{{ post['gender'] }}</li>
+            <li><strong>Age:- </strong>{{ post['age'] }}</li>
+            <li><strong>Missing since:- </strong>{{ post['since'] }}</li>
+            <li><strong>Last seen:- </strong>{{ post['missing_from'] }}</li>
+            <li><strong>Call on:- </strong>{{ post['call_on'] }}</li>
+            <li><strong>Additional info:- </strong>{{ post['addtional_info']}}</li>
+          </ul>
+      </article>
+    </div>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

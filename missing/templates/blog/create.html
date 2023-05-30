@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Post{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+      <label for="missed_name">Missed Person Name</label>
+      <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
+
+      <label for="since">Since When</label>
+      <input name="since" id="since" value="{{ request.form['since'] }}" required class="form-control">
+
+      <label for="missing_from">From where</label>
+      <input name="missing_from" id="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control">
+
+      <label>Gender</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="male" value="male" {% if request.form['gender'] == 'Male' %}checked{% endif %} required>
+        <label class="form-check-label" for="male">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="female" value="female" {% if request.form['gender'] == 'Female' %}checked{% endif %} required>
+        <label class="form-check-label" for="female">Female</label>
+      </div>
+
+      <label for="age">Age</label>
+      <input name="age" id="age" value="{{ request.form['age'] }}" required class="form-control">
+
+      <label for="call_on">Call On</label>
+      <input name="call_on" id="call_on" value="{{ request.form['call_on'] }}" required class="form-control">
+
+      <label for="addtional_info">Addtional Info</label>
+      <textarea name="addtional_info" id="addtional_info" value="{{ request.form['addtional_info'] }}" required class="form-control"></textarea>
+
+      <label for="file">Upload Image</label>
+      <input name="photo_url" id="photo_url" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
+
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

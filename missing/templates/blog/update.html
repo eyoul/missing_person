@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="missed_name">Missed Person Name</label>
+    <input name="missed_name" id="missed_name"
+      value="{{ request.form['missed_name'] or post['missed_name'] }}" required>
+
+    <label for="since">Since When</label>
+    <input name="since" id="since"
+    value="{{ request.form['since'] or post['since'] }}" required>
+
+    <label for="missing_from">From where</label>
+    <input name="missing_from" id="missing_from"
+    value="{{ request.form['missing_from'] or post['missing_from'] }}" required>
+
+    <label for="title">Gender</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {% if request.form['gender'] == 'male' %}checked{% endif %} required>
+      <label class="form-check-label" for="male">Male</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {% if request.form['gender'] == 'female' %}checked{% endif %} required>
+      <label class="form-check-label" for="female">Female</label>
+    </div>
+    <label for="age">From where</label>
+    <input name="age" id="age"
+    value="{{ request.form['age'] or post['age'] }}" required>   
+    <label for="call_on">Title</label>
+    <input name="call_on" id="call_on"
+    value="{{ request.form['call_on'] or post['call_on'] }}" required>
+  
+    <label for="addtional_info">Body</label>
+    <textarea name="addtional_info" id="addtional_info">{{ request.form['addtional_info'] or post['addtional_info'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}
