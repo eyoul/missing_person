@@ -20,11 +20,11 @@
 
     <label for="title">Gender</label>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="gender" id="male" value="male" {% if request.form['gender'] == 'male' %}checked{% endif %} required>
+      <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {% if request.form['gender'] == 'male' %}checked{% endif %} required>
       <label class="form-check-label" for="male">Male</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="gender" id="female" value="female" {% if request.form['gender'] == 'female' %}checked{% endif %} required>
+      <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {% if request.form['gender'] == 'female' %}checked{% endif %} required>
       <label class="form-check-label" for="female">Female</label>
     </div>
     <label for="age">From where</label>
