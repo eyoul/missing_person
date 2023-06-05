@@ -81,9 +81,9 @@ nav ul  {
     font-style: italic; 
 } */
 
-/* .post .body { 
+.post .body { 
     white-space: pre-line; 
-} */
+}
 
 .content:last-child { 
     margin-bottom: 0; 
@@ -204,17 +204,43 @@ footer {
 }
 
 .search-button {
-  background-color: #c6e2e9;
+  background-color: #b4cbd1;
   border: none;
-  color: #333;
+  color: #000000;
   cursor: pointer;
   padding: 10px 16px;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 4px;
   margin-left: -4px;
   width: 100px;
 }
 
 .search-button:hover {
-  background-color: #40f5e9;
+  background-color: #cecdd3;
 }
+
+/* Target all input fields */
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style the submit button */
+  button[type="submit"] {
+    background-color: #5f7ea7;
+    color: rgb(25, 105, 252);
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Change the background color of the input fields on focus */
+  input:focus {
+    background-color: #f2f2f2;
+  }
