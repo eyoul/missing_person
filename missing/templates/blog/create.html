@@ -10,7 +10,7 @@
       <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
 
       <label for="since">Since When</label>
-      <input name="since" id="since" value="{{ request.form['since'] }}" required class="form-control">
+      <input name="since" id="since" type="date" value="{{ request.form['since'] }}" required class="form-control">
 
       <label for="missing_from">From where</label>
       <input name="missing_from" id="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control">
