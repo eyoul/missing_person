@@ -161,15 +161,15 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
 
-    # Delete the picture from the directory
-    filename = post['image']
-    path = os.path.join('static', 'upload', filename) # Construct the path to the file
-    if os.path.exists(path): # Check if the file exists
-        os.remove(path) # Delete the file
+    # Delete the image from the directory (if it exists)
+    filename = post['photo_url'] # Use get() to safely get the image filename
+    if filename:
+        path = os.path.join(UPLOAD_FOLDER, filename)
+        if os.path.exists(path):
+            os.remove(path)
 
+    flash('The post has been deleted.')
     return redirect(url_for('blog.index'))
-
-
 
 @bp.route('/search', methods=['GET', 'POST'])
 def search():
