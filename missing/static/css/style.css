@@ -186,3 +186,35 @@ footer {
 		width: 95%;
 	}
 }
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.search-input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0px 1px 6px #ccc;
+  font-size: 16px;
+  flex: 1;
+  width: 600px;
+}
+
+.search-button {
+  background-color: #c6e2e9;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-left: -4px;
+  width: 100px;
+}
+
+.search-button:hover {
+  background-color: #40f5e9;
+}

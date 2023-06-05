@@ -156,8 +156,21 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_post(id)
+    post = get_post(id)
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
+
+    # Delete the image from the directory (if it exists)
+    filename = post['photo_url'] # Use get() to safely get the image filename
+    if filename:
+        path = os.path.join(UPLOAD_FOLDER, filename)
+        if os.path.exists(path):
+            os.remove(path)
+
+    flash('The post has been deleted.')
     return redirect(url_for('blog.index'))
+
+@bp.route('/search', methods=['GET', 'POST'])
+def search():
+    return render_template('search_form.html')
