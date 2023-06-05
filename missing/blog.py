@@ -171,6 +171,18 @@ def delete(id):
     flash('The post has been deleted.')
     return redirect(url_for('blog.index'))
 
+
 @bp.route('/search', methods=['GET', 'POST'])
 def search():
-    return render_template('search_form.html')
+    if request.method == 'POST':
+        query = request.form['query']
+        db = get_db()
+        posts = db.execute(
+            'SELECT p.id, missed_name, since, missing_from, gender, age, call_on, addtional_info, photo_url, created, finder_id, email'
+            ' FROM post p JOIN user u ON p.finder_id = u.id'
+            ' WHERE missed_name LIKE ? OR missing_from LIKE ?',
+            ('%' + query + '%', '%' + query + '%')
+        ).fetchall()
+        return render_template('blog/search.html', posts=posts, query=query)
+    else:
+        return render_template('blog/index.html')
