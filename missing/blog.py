@@ -183,6 +183,6 @@ def search():
             ' WHERE missed_name LIKE ? OR missing_from LIKE ?',
             ('%' + query + '%', '%' + query + '%')
         ).fetchall()
-        return render_template('blog/search.html', posts=posts, query=query)
+        return render_template('blog/index.html', posts=posts, query=query)
     else:
-        return render_template('blog/index.html')
+        return render_template('blog/base.html')
