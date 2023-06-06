@@ -1,0 +1,14 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <h2>Dashboard</h2>
+  <p>Welcome to the admin dashboard for the Missing Person app!</p>
+  <p>Here are some quick stats:</p>
+  <ul>
+    <li>Total Reports: {{ total_reports }}</li>
+    <li>Active Reports: {{ active_reports }}</li>
+    <li>Resolved Reports: {{ resolved_reports }}</li>
+  </ul>
+{% endblock %}

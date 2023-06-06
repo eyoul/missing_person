@@ -23,5 +23,6 @@ CREATE TABLE post (
   call_on TEXT NOT NULL,
   addtional_info TEXT NOT NULL,
   photo_url TEXT NOT NULL,
+  status TEXT NOT NULL,
   FOREIGN KEY (finder_id) REFERENCES user (id)
 );

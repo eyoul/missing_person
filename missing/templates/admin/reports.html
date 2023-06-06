@@ -1,0 +1,32 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+  <h2>Reports</h2>
+  <p>Here is a list of all reported missing persons:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Last Seen</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in reports %}
+        <tr>
+          <td>{{ report.name }}</td>
+          <td>{{ report.age }}</td>
+          <td>{{ report.gender }}</td>
+          <td>{{ report.last_seen }}</td>
+          <td>{{ report.status }}</td>
+          <td><a href="{{ url_for('admin.edit_report', report_id=report.id) }}">Edit</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

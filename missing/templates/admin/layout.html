@@ -1,0 +1,46 @@
+
+
+
+<!DOCTYPE html>
+<title>{% block title %}{% endblock %} - Admin</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<body>
+<header class="content">
+    <h1><a href="{{ url_for('index') }}">Admin</a></h1>
+    {% if g.user %}
+    <nav>
+      <a href="{{ url_for('auth.logout') }}">Logout</a>
+      <li><span>{{ g.user['email'] }}</span>
+    </nav>
+    <aside>
+        <nav>
+          <ul>
+            <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('admin.users') }}">Users</a></li>
+            <li><a href="{{ url_for('admin.reports') }}">Reports</a></li>
+            <li><a href="{{ url_for('admin.settings') }}">Settings</a></li>
+          </ul>
+        </nav>
+      </aside>
+    {% endif %}
+</header>
+
+<main>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+  
+<footer>
+    <p>&copy; 2023 Missing Person</p>
+</footer>
+</body>
+</html>
