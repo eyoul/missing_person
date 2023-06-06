@@ -7,7 +7,8 @@ CREATE TABLE user (
   phone TEXT NOT NULL,
   finder_location TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
+  password TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE post (
