@@ -8,7 +8,7 @@
   <table>
     <thead>
       <tr>
-        <th>Username</th>
+        <th>Fullname</th>
         <th>Email</th>
         <th>Role</th>
       </tr>
@@ -16,9 +16,9 @@
     <tbody>
       {% for user in users %}
         <tr>
-          <td>{{ user.username }}</td>
+          <td>{{ user.finder_name }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
+          <td>{{ user.role_id }}</td>
         </tr>
       {% endfor %}
     </tbody>

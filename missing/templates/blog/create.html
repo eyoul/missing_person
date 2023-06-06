@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+
   <form method="post" enctype="multipart/form-data">
       <label for="missed_name">Missed Person Name</label>
       <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
@@ -31,12 +32,19 @@
       <label for="call_on">Call On</label>
       <input name="call_on" id="call_on" value="{{ request.form['call_on'] }}" required class="form-control">
 
-      <label for="addtional_info">Addtional Info</label>
-      <textarea name="addtional_info" id="addtional_info" value="{{ request.form['addtional_info'] }}" required class="form-control"></textarea>
+      <label for="additional_info">Addtional Info</label>
+      <textarea name="additional_info" id="additional_info" value="{{ request.form['additional_info'] }}" required class="form-control"></textarea>
 
       <label for="file">Upload Image</label>
       <input name="photo_url" id="photo_url" type="file" {% if request.form['photo_url'] %}value="{{ request.form['photo_url'] }}"{% endif %} required>
 
+    <label for="status">Status</label>
+    <select id="status" name="status" class="form-control" value="{{ request.form['status'] }}">
+      <option value="active" {% if status == 'active' %}selected{% endif %}>Active</option>
+      <!-- <option value="resolved" {% if status == 'resolved' %}selected{% endif %}>Resolved</option> -->
+    </select>
+
     <input type="submit" value="Save">
   </form>
+ 
 {% endblock %}

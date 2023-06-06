@@ -22,7 +22,13 @@
             {% if g.user['id'] == post['finder_id'] %}
               <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
             {% endif %}
-              <p class="miss">MISSING</p>
+            
+            {% if post['status'] == 'active' %}
+            <p class="miss">MISSING</p>
+             {% elif  post['status'] == 'resolved' %}
+             <p class="miss">Found</p>
+             {% endif %}
+              
           {% if post['photo_url'] %}
             <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" alt="{{ post['missed_name'] }} photo">
           {% endif %}
@@ -33,7 +39,7 @@
             <li><strong>Missing since:- </strong>{{ post['since'] }}</li>
             <li><strong>Last seen:- </strong>{{ post['missing_from'] }}</li>
             <li><strong>Call on:- </strong>{{ post['call_on'] }}</li>
-            <li><strong>Additional info:- </strong>{{ post['addtional_info']}}</li>
+            <li><strong>Additional info:- </strong>{{ post['additional_info']}}</li>
           </ul>
       </article>
     </div>

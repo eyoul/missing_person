@@ -7,23 +7,24 @@
   <p>Here is a list of all reported missing persons:</p>
   <table>
     <thead>
+
       <tr>
         <th>Name</th>
-        <th>Age</th>
         <th>Gender</th>
+        <th>Age</th>
         <th>Last Seen</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      {% for report in reports %}
+      {% for post in reports %}
         <tr>
-          <td>{{ report.name }}</td>
-          <td>{{ report.age }}</td>
-          <td>{{ report.gender }}</td>
-          <td>{{ report.last_seen }}</td>
-          <td>{{ report.status }}</td>
+          <td>{{ post['missed_name'] }}</td>
+          <td>{{ post['gender'] }}</td>
+          <td>{{ post['age'] }}</td>
+          <td>{{ post['missing_from'] }}</td>
+          <td>{{ post['status'] }}</td>
           <td><a href="{{ url_for('admin.edit_report', report_id=report.id) }}">Edit</a></td>
         </tr>
       {% endfor %}
