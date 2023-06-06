@@ -35,8 +35,8 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (finder_name, phone, finder_location, email, password) VALUES (?, ?, ?, ?, ?)",
-                    ( phone, finder_location, finder_name, email, generate_password_hash(password)),
+                    "INSERT INTO user (finder_name, phone, finder_location, email, password, role) VALUES (?, ?, ?, ?, ?, ?)",
+                    (finder_name, phone, finder_location, email, generate_password_hash(password), 'user'),
                 )
                 db.commit()
             except db.IntegrityError:
@@ -100,4 +100,6 @@ def login_required(view):
 
         return view(**kwargs)
 
-    return wrapped_view
+    return wrapped_view 
+
+
