@@ -35,8 +35,8 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (finder_name, phone, finder_location, email, password) VALUES (?, ?, ?, ?, ?)",
-                    ( phone, finder_location, finder_name, email, generate_password_hash(password)),
+                    "INSERT INTO user (finder_name, phone, finder_location, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?)",
+                    (finder_name, phone, finder_location, email, generate_password_hash(password), '2'),
                 )
                 db.commit()
             except db.IntegrityError:
@@ -68,7 +68,12 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            if user['role_id'] == 1:
+                return redirect(url_for('admin.dashboard'))
+            elif user['role_id'] == 2:
+                return redirect(url_for('index'))
+            else:
+                error = 'Invalid role.'
 
         flash(error)
 
@@ -100,4 +105,4 @@ def login_required(view):
 
         return view(**kwargs)
 
-    return wrapped_view
+    return wrapped_view 

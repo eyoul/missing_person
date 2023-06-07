@@ -34,8 +34,12 @@
     <input name="call_on" id="call_on"
     value="{{ request.form['call_on'] or post['call_on'] }}" required>
   
-    <label for="addtional_info">Body</label>
-    <textarea name="addtional_info" id="addtional_info">{{ request.form['addtional_info'] or post['addtional_info'] }}</textarea>
+    <label for="additional_info">Body</label>
+    <textarea name="additional_info" id="additional_info">{{ request.form['additional_info'] or post['additional_info'] }}</textarea>
+    <select id="status" name="status" class="form-control" value="{{ request.form['status'] }}">
+      <option value="active" {% if status == 'active' %}selected{% endif %}>Active</option>
+      <option value="resolved" {% if status == 'resolved' %}selected{% endif %}>Resolved</option>
+    </select>
     <input type="submit" value="Save">
   </form>
   <hr>

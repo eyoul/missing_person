@@ -1,0 +1,30 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+  <h2>Reports</h2>
+  <p>Here is a list of all reported missing persons:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Last Seen</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in reports %}
+        <tr>
+          <td>{{ post['missed_name'] }}</td>
+          <td>{{ post['gender'] }}</td>
+          <td>{{ post['age'] }}</td>
+          <td>{{ post['missing_from'] }}</td>
+          <td>{{ post['status'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
