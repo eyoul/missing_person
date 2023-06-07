@@ -13,7 +13,6 @@
         <th>Age</th>
         <th>Last Seen</th>
         <th>Status</th>
-        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +23,6 @@
           <td>{{ post['age'] }}</td>
           <td>{{ post['missing_from'] }}</td>
           <td>{{ post['status'] }}</td>
-          <td><a href="{{ url_for('admin.edit_report', report_id=post.id) }}">Edit</a></td>
         </tr>
       {% endfor %}
     </tbody>
