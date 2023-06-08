@@ -40,9 +40,9 @@ def allowed_file(filename):
 @login_required
 def create():
     if request.method == 'POST':
-        missed_name = request.form['missed_name'].capitalize()
+        missed_name = request.form['missed_name'].upper()
         since = request.form['since']
-        missing_from = request.form['missing_from'].capitalize()
+        missing_from = request.form['missing_from'].upper()
         gender = request.form['gender']
         age = request.form['age']
         call_on = request.form['call_on']
@@ -100,10 +100,9 @@ def create():
 
     return render_template('blog/create.html')
 
-
 def get_post(id, check_finder=True):
     post = get_db().execute(
-        'SELECT p.id, missed_name, since, missing_from,  gender, age,  call_on, additional_info, created, finder_id, email'
+        'SELECT p.id, missed_name, since, missing_from, gender, age, call_on, additional_info, photo_url, status, created, finder_id, email'
         ' FROM post p JOIN user u ON p.finder_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -117,16 +116,15 @@ def get_post(id, check_finder=True):
 
     return post
 
-
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
     post = get_post(id)
 
     if request.method == 'POST':
-        missed_name = request.form['missed_name'].capitalize()
+        missed_name = request.form['missed_name'].upper()
         since = request.form['since']
-        missing_from = request.form['missing_from'].capitalize()
+        missing_from = request.form['missing_from'].upper()
         gender = request.form['gender']
         age = request.form['age']
         call_on = request.form['call_on']
@@ -172,6 +170,9 @@ def update(id):
 @login_required
 def delete(id):
     post = get_post(id)
+    # delete the photo
+    if post['photo_url'] != 'default.jpg':
+        os.remove(os.path.join(UPLOAD_FOLDER, post['photo_url']))
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
