@@ -1,14 +1,36 @@
 import functools
-
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-
 from missing.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view 
+
+
+def login_required_role(role_id):
+    def decorator(f):
+        @functools.wraps(f)
+        def wrapped_view(*args, **kwargs):
+            if g.user is None:
+                return redirect(url_for('auth.login'))
+
+            if g.user['role_id'] != role_id:
+                return redirect(url_for('auth.unauthorized'))
+
+            return f(*args, **kwargs)
+        return wrapped_view
+    return decorator
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -36,7 +58,7 @@ def register():
             try:
                 db.execute(
                     "INSERT INTO user (finder_name, phone, finder_location, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?)",
-                    (finder_name, phone, finder_location, email, generate_password_hash(password), '2'),
+                    (finder_name, phone, finder_location, email, generate_password_hash(password), 2),
                 )
                 db.commit()
             except db.IntegrityError:
@@ -87,7 +109,8 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute(
+        db = get_db()
+        g.user = db.execute(
             'SELECT * FROM user WHERE id = ?', (user_id,)
         ).fetchone()
 
@@ -98,12 +121,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-
-        return view(**kwargs)
-
-    return wrapped_view 
+@bp.route('/unauthorized')
+def unauthorized():
+    return render_template('auth/unauthorized.html')
