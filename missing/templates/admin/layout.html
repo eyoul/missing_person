@@ -7,6 +7,7 @@
     {% if g.user %}
       <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
       <li><a href="{{ url_for('admin.users') }}">Users</a></li>
+      <li><a href="{{ url_for('admin.dashboard') }}">Posts</a></li>
       <li><a href="{{ url_for('admin.reports') }}">Reports</a></li>
       <li><a href="{{ url_for('admin.settings') }}">Settings</a></li>
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
