@@ -1,4 +1,5 @@
 import os
+import uuid
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -80,7 +81,10 @@ def create():
                 error = 'Invalid file type. Only PNG, JPG, JPEG, and GIF are allowed.'
             else:
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(UPLOAD_FOLDER, filename))
+                _, ext = os.path.splitext(filename)
+                # Generate a unique filename using uuid4()
+                unique_filename = str(uuid.uuid4()) + ext
+                file.save(os.path.join(UPLOAD_FOLDER, unique_filename))
                 
         if error is not None: 
             flash(error)
@@ -89,7 +93,7 @@ def create():
             db.execute(
                 'INSERT INTO post (missed_name, since, missing_from, gender, age, call_on, additional_info, photo_url, status, finder_id)'
                 ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                (missed_name, since, missing_from, gender, age, call_on, additional_info, filename, status, g.user['id'])
+                (missed_name, since, missing_from, gender, age, call_on, additional_info, unique_filename, status, g.user['id'])
             )
             db.commit()
             return redirect(url_for('blog.index'))
