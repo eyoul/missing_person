@@ -1,38 +1,16 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for
 )
-from werkzeug.security import check_password_hash, generate_password_hash
-
+from werkzeug.exceptions import abort
+from missing.auth import login_required_role
 from missing.db import get_db
-
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
-
-
-def login_required_admin(role=None):
-    def decorator(view):
-        @functools.wraps(view)
-        def wrapped_view(**kwargs):
-            if g.user is None:
-                return redirect(url_for('admin.login'))
-            if role is not None and g.user['role'] != role:
-                flash(f'You do not have permissions to access this page')
-                return redirect(url_for('index'))
-            return view(**kwargs)
-        return wrapped_view
-    return decorator
-
-
-@bp.route('/admin')
-@login_required_admin(role='admin')
-def admin():
-    return render_template('dashboard.html')
-
-
 @bp.route('/dashboard')
+@login_required_role(1)  # '1' is the role_id for the admin role
 def dashboard():
     # Get some quick stats for the dashboard
     total_reports = get_total_reports()
@@ -58,6 +36,8 @@ def get_resolved_reports():
     db = get_db()
     result = db.execute('SELECT COUNT(*) FROM post WHERE status = "resolved"').fetchone()
     return result[0]
+
+
 
 @bp.route('/users')
 def users():
@@ -106,3 +86,5 @@ def get_max_reports_per_user():
     db = get_db()
     result = db.execute('SELECT value FROM settings WHERE name = "max_reports_per_user"').fetchone()
     return result[0]
+
+
