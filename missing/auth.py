@@ -32,6 +32,7 @@ def login_required_role(role_id):
         return wrapped_view
     return decorator
 
+
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':

@@ -38,8 +38,8 @@ def get_resolved_reports():
     return result[0]
 
 
-
 @bp.route('/users')
+@login_required_role(1)  # '1' is the role_id for the admin role
 def users():
     # Get a list of all users
     users = get_all_users()
@@ -53,6 +53,7 @@ def get_all_users():
 
 
 @bp.route('/reports')
+@login_required_role(1)  # '1' is the role_id for the admin role
 def reports():
     db = get_db()
     reports = db.execute('SELECT * FROM post').fetchall()
@@ -60,6 +61,7 @@ def reports():
 
 
 @bp.route('/settings')
+@login_required_role(1)  # '1' is the role_id for the admin role
 def settings():
     # Get some application settings
     app_name = get_app_name()
@@ -86,5 +88,3 @@ def get_max_reports_per_user():
     db = get_db()
     result = db.execute('SELECT value FROM settings WHERE name = "max_reports_per_user"').fetchone()
     return result[0]
-
-
