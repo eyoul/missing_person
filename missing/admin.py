@@ -11,7 +11,6 @@ from missing.db import get_db
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
-
 def login_required_admin(role=None):
     def decorator(view):
         @functools.wraps(view)
