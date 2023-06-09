@@ -205,6 +205,24 @@ footer {
   background-color: #cecdd3;
 }
 
+#clear-btn {
+    position: relative;
+    /* top: 50%; */
+    right: 35px;
+    /* transform: translateY(-50%); */
+    background-color: transparent;
+    /* border: none; */
+    cursor: pointer;
+  }
+  
+  #clear-btn i {
+    color: #ccc;
+  }
+  
+  #clear-btn:hover i {
+    color: #333;
+  }
+  
 /* Target all input fields */
 input {
     width: 100%;

@@ -8,10 +8,20 @@
 {% endblock %}
 
 {% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/css/all.min.css') }}"> -->
 <div>
   <form class="search-container" action="{{ url_for('blog.search') }}" method="POST">
+    <div>
     <input type="text" placeholder="Search..." name="query" class="search-input">
-    <button type="submit" class="search-button"><i class="fa fa-search">Find</i></button>
+    <button type="button" class="btn" id="clear-btn" aria-label="Clear search">
+      <i class="fas fa-search"></i>
+            </button>
+  </div>
+    <button type="submit" class="search-button">
+      <i class="fas fa-times-circle">Find</i>
+    </button>
   </form>
 </div>
 {% for post in posts %}

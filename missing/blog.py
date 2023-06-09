@@ -1,4 +1,5 @@
 import os
+import pycountry
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -18,7 +19,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 bp = Blueprint('blog', __name__)
 
-
+countries = [country.name for country in pycountry.countries]
 @bp.route('/')
 def index():
     db = get_db()
@@ -41,7 +42,7 @@ def create():
     if request.method == 'POST':
         missed_name = request.form['missed_name'].capitalize()
         since = request.form['since']
-        missing_from = request.form['missing_from'].capitalize()
+        missing_from = request.form['missing_from']
         gender = request.form['gender']
         age = request.form['age']
         call_on = request.form['call_on']
@@ -94,7 +95,7 @@ def create():
             db.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/create.html')
+    return render_template('blog/create.html', countries=countries)
 
 
 def get_post(id, check_finder=True):
