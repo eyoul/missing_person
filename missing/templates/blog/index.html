@@ -1,61 +1,72 @@
 {% extends 'base.html' %}
 
+{% block nav %}
+{% if g.user %}
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('blog.create') }}">Create</a>
+    </li>
+{% endif %}
+{% if g.user['role_id'] == 1 %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin User</a>
+</li> 
+{% endif %}
+{% endblock %}
+
 {% block header %}
   <h1>{% block title %}Missing Persons{% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">New</a>
-  {% endif %}
+  
 {% endblock %}
 
 {% block content %}
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<!-- <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/css/all.min.css') }}"> -->
-<div>
-  <form class="search-container" action="{{ url_for('blog.search') }}" method="POST">
-    <div>
-    <input type="text" placeholder="Search..." name="query" class="search-input">
-    <button type="button" class="btn" id="clear-btn" aria-label="Clear search">
-      <i class="fas fa-search"></i>
-            </button>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form class="search-container" action="{{ url_for('blog.search') }}" method="POST">
+        <div class="input-group mb-3">
+          <input type="text" placeholder="Search..." name="query" class="form-control">
+          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Find</button>
+        </div>
+      </form>
+    </div>
   </div>
-    <button type="submit" class="search-button">
-      <i class="fas fa-times-circle">Find</i>
-    </button>
-  </form>
-</div>
-{% for post in posts %}
-  <div class="row-container">  
-      <article class="post">
-        <header></header>
-          <p class="about">by {{ post['email'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</p>
-            {% if g.user['id'] == post['finder_id'] %}
-              <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-            {% endif %}
-            
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for post in posts %}
+    <div class="col">
+      <div class="card h-100">
+        {% if post['photo_url'] %}
+        <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" class="card-img-top" alt="{{ post['missed_name'] }} photo">
+        {% endif %}
+        <div class="card-body">
+          <h1 class="card-title" style="color: red; text-align: center;">
             {% if post['status'] == 'active' %}
             <p class="miss">MISSING</p>
-             {% elif  post['status'] == 'resolved' %}
-             <p class="miss">Found</p>
-             {% endif %}
-              
-          {% if post['photo_url'] %}
-            <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" alt="{{ post['missed_name'] }} photo">
-          {% endif %}
-          <h2>{{ post['missed_name'] }}</h2>
-          <ul>
-            <li><strong>Gender:- </strong>{{ post['gender'] }}</li>
-            <li><strong>Age:- </strong>{{ post['age'] }}</li>
-            <li><strong>Missing since:- </strong>{{ post['since'] }}</li>
-            <li><strong>Last seen:- </strong>{{ post['missing_from'] }}</li>
-            <li><strong>Call on:- </strong>{{ post['call_on'] }}</li>
-            <li><strong>Additional info:- </strong>{{ post['additional_info']}}</li>
+            {% elif  post['status'] == 'resolved' %}
+            <p class="miss">FOUND</p>
+            {% endif %}
+            </h1>
+          <h5 class="card-title" style="color: rgb(17, 0, 255);">
+            {{ post['missed_name'] }}
+          </h5>
+          <ul class="card-text">
+            <li><strong>Gender:</strong> {{ post['gender'] }}</li>
+            <li><strong>Age:</strong> {{ post['age'] }}</li>
+            <li><strong>Missing since:</strong> {{ post['since'] }}</li>
+            <li><strong>Last seen:</strong> {{ post['missing_from'] }}</li>
+            <li><strong>Call on:</strong> {{ post['call_on'] }}</li>
+            <li><strong>Additional info:</strong> {{ post['additional_info']}}</li>
           </ul>
-      </article>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"> <p class="about">by {{ post['email'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</p></small>
+          {% if g.user and g.user['id'] == post['finder_id'] %}
+          <a class="btn btn-primary" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
-  {% endfor %}
-
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

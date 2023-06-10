@@ -3,28 +3,45 @@
 {% block title %}Reports{% endblock %}
 
 {% block content %}
-  <h2>Reports</h2>
-  <p>Here is a list of all reported missing persons:</p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Last Seen</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for post in reports %}
-        <tr>
-          <td>{{ post['missed_name'] }}</td>
-          <td>{{ post['gender'] }}</td>
-          <td>{{ post['age'] }}</td>
-          <td>{{ post['missing_from'] }}</td>
-          <td>{{ post['status'] }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="container mt-5">
+    <h2>Reports</h2>
+    <p>Here is a list of all reported missing persons:</p>
+    <div class="table-responsive mt-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Missing Since</th>
+            <th>Last Seen</th>
+            <th>Call On</th>
+            <th>Additional Info</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in reports %}
+            <tr>
+              <td>{{ post['missed_name'] }}</td>
+              <td>{{ post['gender'] }}</td>
+              <td>{{ post['age'] }}</td>
+              <td>{{ post['since'] }}</td>
+              <td>{{ post['missing_from'] }}</td>
+              <td>{{ post['call_on'] }}</td>
+              <td>{{ post['additional_info']}}</td>
+              <td>{{ post['status'] }}</td>
+              <td>
+                <form action="{{ url_for('blog.delete', id=post.id) }}" method="post" onsubmit="return confirm('Are you sure?');">
+                  <input type="hidden" name="id" value="{{ post.id }}">
+                  <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}
