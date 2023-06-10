@@ -1,10 +1,6 @@
 import os
-<<<<<<< HEAD
-import pycountry
-=======
 import uuid
 import csv
->>>>>>> 81da4936e8aabc10ce21f352be345c56a00b0df3
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -50,11 +46,7 @@ def create():
         # Extract form inputs
         missed_name = request.form['missed_name'].upper()
         since = request.form['since']
-<<<<<<< HEAD
-        missing_from = request.form['missing_from']
-=======
         missing_from = request.form['missing_from'].upper()
->>>>>>> 81da4936e8aabc10ce21f352be345c56a00b0df3
         gender = request.form['gender']
         age = request.form['age']
         call_on = request.form['call_on']

@@ -59,11 +59,7 @@ def register():
             try:
                 db.execute(
                     "INSERT INTO user (finder_name, phone, finder_location, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?)",
-<<<<<<< HEAD
-                    (finder_name, phone, finder_location, email, generate_password_hash(password), '1'),
-=======
                     (finder_name, phone, finder_location, email, generate_password_hash(password), 2),
->>>>>>> 81da4936e8aabc10ce21f352be345c56a00b0df3
                 )
                 db.commit()
             except db.IntegrityError:

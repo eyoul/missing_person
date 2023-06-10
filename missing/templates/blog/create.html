@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
+  <form method="post" enctype="multipart/form-data">
+      <label for="missed_name">Missed Person Name</label>
+      <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
+=======
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -19,6 +24,7 @@
             <label for="since" class="form-label">Since When</label>
             <input name="since" id="since" type="date" value="{{ request.form['since'] }}" required class="form-control">
           </div>
+>>>>>>> 81da4936e8aabc10ce21f352be345c56a00b0df3
 
           <div class="mb-3">
             <label for="missing_from" class="form-label">From where</label>
