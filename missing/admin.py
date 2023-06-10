@@ -60,34 +60,4 @@ def reports():
     return render_template('admin/reports.html', reports=reports)
 
 
-@bp.route('/settings')
-@login_required_role(1)  # '1' is the role_id for the admin role
-def settings():
-    # Get some application settings
-    app_name = get_app_name()
-    default_location = get_default_location()
-    max_reports_per_user = get_max_reports_per_user()
-
-    return render_template('admin/settings.html', app_name=app_name,
-                           default_location=default_location,
-                           max_reports_per_user=max_reports_per_user)
-
-def get_app_name():
-    db = get_db()
-    result = db.execute('SELECT value FROM settings WHERE name = "post"').fetchone()
-    return result[0]
-
-
-def get_default_location():
-    db = get_db()
-    result = db.execute('SELECT value FROM settings WHERE name = "default_location"').fetchone()
-    return result[0]
-
-
-def get_max_reports_per_user():
-    db = get_db()
-    result = db.execute('SELECT value FROM settings WHERE name = "max_reports_per_user"').fetchone()
-    return result[0]
-
-
     
