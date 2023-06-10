@@ -102,6 +102,98 @@ def login():
 
     return render_template('auth/login.html')
 
+@bp.route('/add_user', methods=('GET', 'POST'))
+@login_required_role(1)
+def add_user():
+    if request.method == 'POST':
+        finder_name = request.form['finder_name']
+        phone = request.form['phone']
+        finder_location = request.form['finder_location']
+        email = request.form['email']
+        password = request.form['password']
+        role_id = request.form['role_id']
+
+        db = get_db()
+        error = None
+
+        if not finder_name:
+            error = 'Name is required.'
+        elif not phone:
+            error = 'Phone is required.'
+        elif not finder_location:
+            error = 'Location is required.'
+        elif not email:
+            error = 'Email is required.'
+        elif not password:
+            error = 'Password is required.'
+        elif not role_id:
+            error = 'Role is required.'
+
+        if error is None:
+            try:
+                db.execute(
+                    "INSERT INTO user (finder_name, phone, finder_location, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?)",
+                    (finder_name, phone, finder_location, email, generate_password_hash(password), role_id),
+                )
+                db.commit()
+            except db.IntegrityError:
+                error = f"User {email} is already registered."
+            else:
+                return redirect(url_for("admin.users"))
+
+        flash(error)
+
+    return render_template('admin/add_user.html')
+
+
+@bp.route('/edit_user/<int:user_id>', methods=('GET', 'POST'))
+@login_required_role(1)
+def edit_user(user_id):
+    db = get_db()
+    user = db.execute(
+        'SELECT * FROM user WHERE id = ?', (user_id,)
+    ).fetchone()
+
+    if request.method == 'POST':
+        finder_name = request.form['finder_name']
+        phone = request.form['phone']
+        finder_location = request.form['finder_location']
+        email = request.form['email']
+        password = request.form['password']
+        role_id = request.form['role_id']
+
+        error = None
+
+        if not finder_name:
+            error = 'Name is required.'
+        elif not phone:
+            error = 'Phone is required.'
+        elif not finder_location:
+            error = 'Location is required.'
+        elif not email:
+            error = 'Email is required.'
+        elif not role_id:
+            error = 'Role is required.'
+
+        if error is None:
+            if password:
+                db.execute(
+                    "UPDATE user SET finder_name = ?, phone = ?, finder_location = ?, email = ?, password = ?, role_id = ? WHERE id = ?",
+                    (finder_name, phone, finder_location, email, generate_password_hash(password), role_id, user_id),
+                )
+            else:
+                db.execute(
+                    "UPDATE user SET finder_name = ?, phone = ?, finder_location = ?, email = ?, role_id = ? WHERE id = ?",
+                    (finder_name, phone, finder_location, email, role_id, user_id),
+                )
+
+            db.commit()
+            return redirect(url_for('admin.users'))
+
+        flash(error)
+
+    return render_template('admin/edit_user.html', user=user)
+
 
 @bp.before_app_request
 def load_logged_in_user():
@@ -114,6 +206,15 @@ def load_logged_in_user():
         g.user = db.execute(
             'SELECT * FROM user WHERE id = ?', (user_id,)
         ).fetchone()
+
+
+@bp.route('/delete_user/<int:user_id>', methods=('POST',))
+@login_required_role(1)
+def delete_user(user_id):
+    db = get_db()
+    db.execute('DELETE FROM user WHERE id = ?', (user_id,))
+    db.commit()
+    return redirect(url_for('admin.users'))
 
 
 @bp.route('/logout')
