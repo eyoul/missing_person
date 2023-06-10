@@ -1,5 +1,6 @@
 import os
 import uuid
+import csv
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -9,6 +10,7 @@ from werkzeug.utils import secure_filename
 # from missing.auth import login_required
 from missing.db import get_db
 from .auth import login_required
+from .admin import login_required_role
 
 # upload file path
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'missing', 'static', 'uploads')
@@ -39,7 +41,9 @@ def allowed_file(filename):
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    # Handle form submission
     if request.method == 'POST':
+        # Extract form inputs
         missed_name = request.form['missed_name'].upper()
         since = request.form['since']
         missing_from = request.form['missing_from'].upper()
@@ -51,6 +55,7 @@ def create():
         
         error = None
 
+        # Validate form inputs
         if not missed_name:
             error = 'Full Name is required.'
         elif not since:
@@ -70,7 +75,7 @@ def create():
         elif status not in ['active', 'resolved']:
             error = 'Invalid status. Should be either "active" or "resolved".'
 
-        # handle photo_url upload
+        # Handle photo_url upload
         if 'photo_url' not in request.files:
             error = 'Photo is required.'
         else:
@@ -86,6 +91,7 @@ def create():
                 unique_filename = str(uuid.uuid4()) + ext
                 file.save(os.path.join(UPLOAD_FOLDER, unique_filename))
                 
+        # Handle errors and success
         if error is not None: 
             flash(error)
         else:
@@ -98,7 +104,8 @@ def create():
             db.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/create.html')
+    return render_template('blog/create.html', data=data)
+
 
 def get_post(id, check_finder=True):
     post = get_db().execute(
@@ -115,6 +122,7 @@ def get_post(id, check_finder=True):
         abort(403)
 
     return post
+
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
@@ -168,6 +176,7 @@ def update(id):
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
+@login_required_role(1)
 def delete(id):
     post = get_post(id)
     # delete the photo
@@ -179,7 +188,6 @@ def delete(id):
 
     flash('The post has been deleted.')
     return redirect(url_for('blog.index'))
-
 
 @bp.route('/search', methods=['GET', 'POST'])
 def search():
@@ -195,3 +203,7 @@ def search():
         return render_template('blog/index.html', posts=posts, query=query)
     else:
         return render_template('blog/index.html')
+    
+
+    
+

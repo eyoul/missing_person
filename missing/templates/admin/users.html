@@ -5,23 +5,35 @@
 {% block content %}
   <h2>Users</h2>
   <p>Here is a list of all registered users:</p>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Fullname</th>
+        <th>Phone</th>
+        <th>Location</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Action</th>
+        <th>Add</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
       {% for user in users %}
         <tr>
           <td>{{ user.finder_name }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.finder_location }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role_id }}</td>
+          <td><button class="btn btn-success" type="submit">Add</button></td>
+          <td><button class="btn btn-primary" type="submit">Edit</button></td>
+          <td><form method="post" onsubmit="return confirm('Are you sure?');">
+              <button class="btn btn-danger" type="submit">Delete</button>
+          </form></td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
 {% endblock %}
+
