@@ -6,6 +6,11 @@
       <a class="nav-link" href="{{ url_for('blog.create') }}">Create</a>
     </li>
 {% endif %}
+{% if g.user['role_id'] == 1 %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin User</a>
+</li> 
+{% endif %}
 {% endblock %}
 
 {% block header %}
@@ -34,12 +39,14 @@
         <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" class="card-img-top" alt="{{ post['missed_name'] }} photo">
         {% endif %}
         <div class="card-body">
-          <h5 class="card-title">
+          <h1 class="card-title" style="color: red; text-align: center;">
             {% if post['status'] == 'active' %}
             <p class="miss">MISSING</p>
             {% elif  post['status'] == 'resolved' %}
             <p class="miss">FOUND</p>
             {% endif %}
+            </h1>
+          <h5 class="card-title" style="color: rgb(17, 0, 255);">
             {{ post['missed_name'] }}
           </h5>
           <ul class="card-text">
