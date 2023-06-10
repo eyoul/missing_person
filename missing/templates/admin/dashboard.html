@@ -1,13 +1,36 @@
 {% extends "admin/layout.html" %}
 
 {% block title %}Dashboard{% endblock %}
+
 {% block content %}
-  <h2>Dashboard</h2>
-  <p>Welcome to the admin dashboard for the Missing Person app!</p>
-  <p>Here are some quick stats:</p>
-  <ul>
-    <li>Total Reports: {{ total_reports }}</li>
-    <li>Active Reports: {{ active_reports }}</li>
-    <li>Resolved Reports: {{ resolved_reports }}</li>
-  </ul>
+  <div class="container mt-5">
+    <h2>Dashboard</h2>
+    <p>Welcome to the admin dashboard for the Missing Person app!</p>
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header">Total Reports</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_reports }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+          <div class="card-header">Active Reports</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ active_reports }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-white bg-danger mb-3">
+          <div class="card-header">Resolved Reports</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ resolved_reports }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

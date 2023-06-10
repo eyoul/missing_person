@@ -88,3 +88,6 @@ def get_max_reports_per_user():
     db = get_db()
     result = db.execute('SELECT value FROM settings WHERE name = "max_reports_per_user"').fetchone()
     return result[0]
+
+
+    

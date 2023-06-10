@@ -1,56 +1,65 @@
 {% extends 'base.html' %}
 
+{% block nav %}
+{% if g.user %}
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('blog.create') }}">Create</a>
+    </li>
+{% endif %}
+{% endblock %}
+
 {% block header %}
   <h1>{% block title %}Missing Persons{% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">New</a>
-  {% endif %}
+  
 {% endblock %}
 
 {% block content %}
-<div>
-  <form class="search-container" action="{{ url_for('blog.search') }}" method="POST">
-    <input type="text" placeholder="Search..." name="query" class="search-input">
-    <button type="submit" class="search-button"><i class="fa fa-search">Find</i></button>
-  </form>
-</div>
-{% for post in posts %}
-
-<div class="card" style="width: 18rem;">
-{% if post['photo_url'] %}
-  <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" class="card-img-top" alt="{{ post['missed_name'] }} photo">
-{% endif %}
-<div>
-  <p class="about">by {{ post['email'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</p>
-  {% if g.user['id'] == post['finder_id'] %}
-    <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-  {% endif %}
-</div>
-  <div class="card-body">
-    {% if post['status'] == 'active' %}
-        <p class="miss">MISSING</p>
-         {% elif  post['status'] == 'resolved' %}
-        <p class="miss">FOUND</p>
-     {% endif %}
-    <h5 class="card-title">{{ post['missed_name'] }}</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form class="search-container" action="{{ url_for('blog.search') }}" method="POST">
+        <div class="input-group mb-3">
+          <input type="text" placeholder="Search..." name="query" class="form-control">
+          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Find</button>
+        </div>
+      </form>
+    </div>
   </div>
-    <ul>
-      <li><strong>Gender:- </strong>{{ post['gender'] }}</li>
-      <li><strong>Age:- </strong>{{ post['age'] }}</li>
-      <li><strong>Missing since:- </strong>{{ post['since'] }}</li>
-      <li><strong>Last seen:- </strong>{{ post['missing_from'] }}</li>
-      <li><strong>Call on:- </strong>{{ post['call_on'] }}</li>
-      <li><strong>Additional info:- </strong>{{ post['additional_info']}}</li>
-    </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for post in posts %}
+    <div class="col">
+      <div class="card h-100">
+        {% if post['photo_url'] %}
+        <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" class="card-img-top" alt="{{ post['missed_name'] }} photo">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">
+            {% if post['status'] == 'active' %}
+            <p class="miss">MISSING</p>
+            {% elif  post['status'] == 'resolved' %}
+            <p class="miss">FOUND</p>
+            {% endif %}
+            {{ post['missed_name'] }}
+          </h5>
+          <ul class="card-text">
+            <li><strong>Gender:</strong> {{ post['gender'] }}</li>
+            <li><strong>Age:</strong> {{ post['age'] }}</li>
+            <li><strong>Missing since:</strong> {{ post['since'] }}</li>
+            <li><strong>Last seen:</strong> {{ post['missing_from'] }}</li>
+            <li><strong>Call on:</strong> {{ post['call_on'] }}</li>
+            <li><strong>Additional info:</strong> {{ post['additional_info']}}</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"> <p class="about">by {{ post['email'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</p></small>
+          {% if g.user and g.user['id'] == post['finder_id'] %}
+          <a class="btn btn-primary" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 </div>
-   {% if not loop.last %}
-      <hr>
-    {% endif %}
-  {% endfor %}
-
 {% endblock %}
