@@ -26,11 +26,14 @@
           <td>{{ user.finder_location }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role_id }}</td>
-          <td><button class="btn btn-success" type="submit">Add</button></td>
-          <td><button class="btn btn-primary" type="submit">Edit</button></td>
-          <td><form method="post" onsubmit="return confirm('Are you sure?');">
-              <button class="btn btn-danger" type="submit">Delete</button>
-          </form></td>
+          <td><a class="btn btn-success" href="{{ url_for('auth.add_user') }}">Add</a></td>
+          <td><a class="btn btn-primary" href="{{ url_for('auth.edit_user', user_id=user.id) }}">Edit</a></td>
+          <td>
+          <form method="post" action="{{ url_for('auth.delete_user', user_id=user.id) }}" onsubmit="return confirm('Are you sure you want to delete this user?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>      
+        </td>
         </tr>
       {% endfor %}
     </tbody>
