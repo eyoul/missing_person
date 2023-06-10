@@ -33,9 +33,10 @@
               <td>{{ post['additional_info']}}</td>
               <td>{{ post['status'] }}</td>
               <td>
-                <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post" onsubmit="return confirm('Are you sure?');">
+                <form action="{{ url_for('blog.delete', id=post.id) }}" method="post" onsubmit="return confirm('Are you sure?');">
+                  <input type="hidden" name="id" value="{{ post.id }}">
                   <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
+              </form>
               </td>
             </tr>
           {% endfor %}

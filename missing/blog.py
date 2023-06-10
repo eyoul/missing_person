@@ -173,12 +173,27 @@ def update(id):
 
     return render_template('blog/update.html', post=post)
 
+def get_post_delete(id, check_finder=True):
+    post = get_db().execute(
+        'SELECT p.id, missed_name, since, missing_from, gender, age, call_on, additional_info, photo_url, status, created, finder_id, email'
+        ' FROM post p JOIN user u ON p.finder_id = u.id'
+        ' WHERE p.id = ?',
+        (id,)
+    ).fetchone()
+
+    if post is None:
+        abort(404, f"Post id {id} doesn't exist.")
+
+    if g.user['role_id'] != 1:
+            abort(403, "You do not have permission to access this post.")
+
+    return post
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 @login_required_role(1)
 def delete(id):
-    post = get_post(id)
+    post = get_post_delete(id)
     # delete the photo
     if post['photo_url'] != 'default.jpg':
         os.remove(os.path.join(UPLOAD_FOLDER, post['photo_url']))
@@ -187,7 +202,8 @@ def delete(id):
     db.commit()
 
     flash('The post has been deleted.')
-    return redirect(url_for('blog.index'))
+    return redirect(url_for('admin.reports'))
+
 
 @bp.route('/search', methods=['GET', 'POST'])
 def search():
