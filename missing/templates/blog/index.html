@@ -18,9 +18,9 @@
         <div class="row">
 
             <div class="col-lg-8 col-12 mx-auto">
-                <h1 class="text-white text-center">Missing Person</h1>
+                <h1 class="text-white text-center">Have you seen me?</h1>
 
-                <h6 class="text-center">Have you seen me?</h6>
+                <h6 class="text-center">Missing Person</h6>
 
                 <form method="POST" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" action="{{ url_for('blog.search') }}" role="search">
                     <div class="input-group input-group-lg">
@@ -47,8 +47,6 @@
 
                               <p class="mb-0">If you see me, talk to me. Don't be afraid to approach me or ask if I need help. Your kindness could make all the difference in bringing me back to safety and reuniting me with my loved ones.</p>
                           </div>
-
-                          <span class="badge bg-design rounded-pill ms-auto">14</span>
                       </div>
                       <img src="https://c8.alamy.com/comp/HRHH2G/have-you-seen-me-ad-of-missing-girl-missing-children-missing-child-HRHH2G.jpg"custom-block-image img-fluid" alt="">
            
@@ -58,8 +56,6 @@
           <div class="col-lg-6 col-12">
               <div class="custom-block custom-block-overlay">
                   <div class="d-flex flex-column h-100">
-                      <img src="images/businesswoman-using-tablet-analysis.jpg" class="custom-block-image img-fluid" alt="">
-
                       <div class="custom-block-overlay-text d-flex">
                           <div>
                               <h5 class="text-white mb-2">Welcome to Missing Person Dashboard</h5>
@@ -80,8 +76,8 @@
 
       </div>
   </div>
-</section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
-<div> <h3 style="text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; color: rgb(73, 108, 112);">Missing Person List</h3></div>
+</section class="hero-section d-flex justify-content-center align-items-center" id="section_1"><br><br>
+<div> <h3 style="text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; color: rgb(73, 108, 112);">Missing Person List</h3></div><br><br>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for post in posts %}
     <div class="col">
@@ -119,5 +115,6 @@
     </div>
     {% endfor %}
   </div>
+  <br><br>
 </div>
 {% endblock %}
