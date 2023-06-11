@@ -6,11 +6,6 @@
 {% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-  <form method="post" enctype="multipart/form-data">
-      <label for="missed_name">Missed Person Name</label>
-      <input name="missed_name" id="missed_name" value="{{ request.form['missed_name'] }}" required class="form-control">
-=======
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -24,26 +19,12 @@
             <label for="since" class="form-label">Since When</label>
             <input name="since" id="since" type="date" value="{{ request.form['since'] }}" required class="form-control">
           </div>
->>>>>>> 81da4936e8aabc10ce21f352be345c56a00b0df3
 
           <div class="mb-3">
             <label for="missing_from" class="form-label">From where</label>
             <input name="missing_from" id="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control">
           </div>
 
-<<<<<<< HEAD
-      <label for="missing_from">From where</label>
-      <!-- <input name="missing_from" id="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control"> -->
-      <select id="missing_from" name="missing_from" value="{{ request.form['missing_from'] }}" required class="form-control">
-        {% for country in countries %}
-            <option value="{{ country }}">{{ country }}</option>
-        {% endfor %}
-    </select>
-      <label>Gender</label>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="male" value="male" {% if request.form['gender'] == 'Male' %}checked{% endif %} required>
-        <label class="form-check-label" for="male">Male</label>
-=======
           <div class="mb-3">
             <label class="form-label d-block">Gender</label>
             <div class="form-check form-check-inline">
@@ -87,7 +68,6 @@
             <button type="submit" class="btn btn-primary">Save</button>
           </div>
         </form>
->>>>>>> 81da4936e8aabc10ce21f352be345c56a00b0df3
       </div>
     </div>
   </div>

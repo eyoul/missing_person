@@ -21,7 +21,6 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 bp = Blueprint('blog', __name__)
 
-countries = [country.name for country in pycountry.countries]
 @bp.route('/')
 def index():
     db = get_db()
@@ -104,7 +103,7 @@ def create():
             db.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/create.html', countries=countries)
+    return render_template('blog/create.html')
 
 
 def get_post(id, check_finder=True):
