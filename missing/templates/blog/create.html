@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1 class="display-4">{% block title %}New Post{% endblock %}</h1>
-{% endblock %}
-
+{% block title %}New Post{% endblock %}
 {% block content %}
+<section class="topics-detail-section section-padding" id="topics-detail">
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -70,4 +67,5 @@
       </div>
     </div>
   </div>
+  </section>
 {% endblock %}

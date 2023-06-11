@@ -1,37 +1,87 @@
 {% extends 'base.html' %}
-
+{% block title %}Missing Persons{% endblock %}
 {% block nav %}
-{% if g.user %}
+    {% if g.user %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('blog.create') }}">Create</a>
+        </li>
+    {% endif %}
+    {% if g.user['role_id'] == 1 %}
     <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('blog.create') }}">Create</a>
-    </li>
-{% endif %}
-{% if g.user['role_id'] == 1 %}
-<li class="nav-item">
-  <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin User</a>
-</li> 
-{% endif %}
+      <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin User</a>
+    </li> 
+    {% endif %}
 {% endblock %}
-
-{% block header %}
-  <h1>{% block title %}Missing Persons{% endblock %}</h1>
-  
-{% endblock %}
-
 {% block content %}
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <form class="search-container" action="{{ url_for('blog.search') }}" method="POST">
-        <div class="input-group mb-3">
-          <input type="text" placeholder="Search..." name="query" class="form-control">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Find</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <div class="container">
+        <div class="row">
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col-lg-8 col-12 mx-auto">
+                <h1 class="text-white text-center">Missing Person</h1>
+
+                <h6 class="text-center">Have you seen me?</h6>
+
+                <form method="POST" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" action="{{ url_for('blog.search') }}" role="search">
+                    <div class="input-group input-group-lg">
+
+                        <input name="query" type="search" class="form-control" id="keyword" placeholder="Search for Missing person ..." aria-label="Search">
+
+                        <button type="submit" class="form-control">Search</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="featured-section">
+  <div class="container">
+      <div class="row justify-content-center">
+
+          <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+              <div class="custom-block bg-white shadow-lg">
+                      <div class="d-flex">
+                          <div>
+                              <h5 class="mb-2">Have you seen me?</h5>
+
+                              <p class="mb-0">If you see me, talk to me. Don't be afraid to approach me or ask if I need help. Your kindness could make all the difference in bringing me back to safety and reuniting me with my loved ones.</p>
+                          </div>
+
+                          <span class="badge bg-design rounded-pill ms-auto">14</span>
+                      </div>
+                      <img src="https://c8.alamy.com/comp/HRHH2G/have-you-seen-me-ad-of-missing-girl-missing-children-missing-child-HRHH2G.jpg"custom-block-image img-fluid" alt="">
+           
+              </div>
+          </div>
+
+          <div class="col-lg-6 col-12">
+              <div class="custom-block custom-block-overlay">
+                  <div class="d-flex flex-column h-100">
+                      <img src="images/businesswoman-using-tablet-analysis.jpg" class="custom-block-image img-fluid" alt="">
+
+                      <div class="custom-block-overlay-text d-flex">
+                          <div>
+                              <h5 class="text-white mb-2">Welcome to Missing Person Dashboard</h5>
+
+                              <p class="text-white">Every year, thousands of people go missing. Many of them are never found, leaving their families and loved ones in a state of uncertainty and anguish. The Missing Person Search website is dedicated to helping find these missing individuals and bringing closure to their families.</p>
+
+                              <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Learn More</a>
+
+                              <p class="text-white">Our website provides a comprehensive database of missing persons, which can be have a search engine. We also offer resources and support for families of missing persons, as well as information on how to report a missing person</p>
+
+                          </div>
+                      </div>
+
+                      <div class="section-overlay"></div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for post in posts %}
     <div class="col">
       <div class="card h-100">
@@ -39,11 +89,11 @@
         <img src="{{ url_for('static', filename='uploads/' + post['photo_url']) }}" class="card-img-top" alt="{{ post['missed_name'] }} photo">
         {% endif %}
         <div class="card-body">
-          <h1 class="card-title" style="color: red; text-align: center;">
+          <h1 class="card-title">
             {% if post['status'] == 'active' %}
-            <p class="miss">MISSING</p>
+            <h2 style="color: red; text-align: center">MISSING</h2>
             {% elif  post['status'] == 'resolved' %}
-            <p class="miss">FOUND</p>
+            <h2 style="color: green; text-align: center">FOUND</h2>
             {% endif %}
             </h1>
           <h5 class="card-title" style="color: rgb(17, 0, 255);">

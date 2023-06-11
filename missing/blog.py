@@ -219,7 +219,8 @@ def search():
         return render_template('blog/index.html', posts=posts, query=query)
     else:
         return render_template('blog/index.html')
-    
 
     
-
+@bp.route('/terms-and-conditions', methods=['GET', 'POST'])
+def terms_and_conditions():
+    return render_template('blog/terms_and_conditions.html')
