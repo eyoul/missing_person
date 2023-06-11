@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
-{% endblock %}
-
+  {% block title %}Edit "{{ post['title'] }}"{% endblock %}
 {% block content %}
+<section class="topics-detail-section section-padding" id="topics-detail">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -60,4 +57,5 @@
       </div>
     </div>
   </div>
+</section>
 {% endblock %}
