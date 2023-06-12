@@ -1,6 +1,5 @@
 import os
 import uuid
-import csv
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
