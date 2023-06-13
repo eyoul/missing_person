@@ -3,6 +3,7 @@
 {% block title %}Users{% endblock %}
 
 {% block content %}
+<section>
   <h2>Users</h2>
   <p>Here is a list of all registered users:</p>
   <table class="table table-striped">
@@ -13,7 +14,6 @@
         <th>Location</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Add</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -26,7 +26,6 @@
           <td>{{ user.finder_location }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role_id }}</td>
-          <td><a class="btn btn-success" href="{{ url_for('auth.add_user') }}">Add</a></td>
           <td><a class="btn btn-primary" href="{{ url_for('auth.edit_user', user_id=user.id) }}">Edit</a></td>
           <td>
           <form method="post" action="{{ url_for('auth.delete_user', user_id=user.id) }}" onsubmit="return confirm('Are you sure you want to delete this user?')">
@@ -38,5 +37,6 @@
       {% endfor %}
     </tbody>
   </table>
+</section>
 {% endblock %}
 
