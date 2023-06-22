@@ -58,5 +58,3 @@ def reports():
     db = get_db()
     reports = db.execute('SELECT * FROM post').fetchall()
     return render_template('admin/reports.html', reports=reports)
-
-    
